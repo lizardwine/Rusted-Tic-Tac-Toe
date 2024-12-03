@@ -51,7 +51,15 @@ impl Board{
             input = String::new();
 
             std::io::stdin().read_line(&mut input).expect("Failed to read line");
-            input_int = input.trim().parse().expect("Please type a number!");
+            match input.trim().parse::<usize>(){
+                Ok(num) => input_int = num,
+                Err(_) => {
+                    println!("Please type a number!");
+                    print!("{}'s Turn: ", if self.xturn { "X" } else { "O" });
+                    std::io::stdout().flush().unwrap();
+                    continue;
+                }
+            };
 
             if !(input_int > 0 && input_int < 10){
                 println!("Please type a number between 1 and 9");
